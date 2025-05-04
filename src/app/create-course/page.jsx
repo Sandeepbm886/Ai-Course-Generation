@@ -44,7 +44,7 @@ const [activeIndex, setActiveIndex]=useState(0)
       </div>
       <div className='px-10 md:px-20 lg:px-44 mt-10'>
       <div className='flex justify-between mt-10'>
-        <Button disabled={activeIndex==0} onClick={()=>setActiveIndex(activeIndex-1)}>Prev</Button>
+        <Button variant={"outline"} disabled={activeIndex==0} onClick={()=>setActiveIndex(activeIndex-1)}>Prev</Button>
         {activeIndex<2 &&<Button onClick={()=>setActiveIndex(activeIndex+1)}>Next</Button>}
         {activeIndex==2 &&<Button onClick={()=>setActiveIndex(activeIndex+1)}>Generate Course Layout</Button>}
       </div>
