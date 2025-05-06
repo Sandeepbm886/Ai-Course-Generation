@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useContext } from 'react'
 import { PiSquaresFourFill } from "react-icons/pi";
 import { GiDiscussion } from "react-icons/gi";
 import { IoOptions } from "react-icons/io5";
@@ -8,6 +8,7 @@ import { useState } from 'react';
 import SelectCategory from './_components/SelectCategory';
 import TopicDescription from './_components/TopicDescription';
 import SelectOption from './_components/SelectOption';
+import { UserInputContext } from '../_context/UserInputContext';
 
 function CreateCourse() {
   const stepperOptions=[{
@@ -26,7 +27,23 @@ function CreateCourse() {
     icon:<IoOptions />
   }
 ]
-const [activeIndex, setActiveIndex]=useState(0)
+const {userCourseInput, setUserCourseInput}=useContext(UserInputContext);
+const [activeIndex, setActiveIndex]=useState(0);
+const checkStaus=()=>{
+  if(userCourseInput.length==0){
+    return true;
+  }
+  if(activeIndex==0 && (userCourseInput?.category?.length==0||userCourseInput?.category==undefined)){
+    return true;
+  }
+  if(activeIndex==1 && (userCourseInput?.topic?.length==0||userCourseInput?.topic==undefined)){
+    return true;
+  }
+  else if(activeIndex==2&&(userCourseInput?.difficulty==undefined||userCourseInput?.duration==undefined||userCourseInput?.video==undefined||userCourseInput?.chapters==undefined)){
+    return true;
+  }
+  return false;
+}
   return (
     <div>
       <div className='flex flex-col justify-center items-center mt-10'>
@@ -50,8 +67,8 @@ const [activeIndex, setActiveIndex]=useState(0)
         {activeIndex==0?<SelectCategory/>:activeIndex==1?<TopicDescription/>:<SelectOption/>}
       <div className='flex justify-between mt-10'>
         <Button variant={"outline"} disabled={activeIndex==0} onClick={()=>setActiveIndex(activeIndex-1)}>Prev</Button>
-        {activeIndex<2 &&<Button onClick={()=>setActiveIndex(activeIndex+1)}>Next</Button>}
-        {activeIndex==2 &&<Button onClick={()=>setActiveIndex(activeIndex+1)}>Generate Course Layout</Button>}
+        {activeIndex<2 &&<Button disabled={checkStaus()} onClick={()=>setActiveIndex(activeIndex+1)}>Next</Button>}
+        {activeIndex==2 &&<Button disabled={checkStaus()} onClick={()=>setActiveIndex(activeIndex+1)}>Generate Course Layout</Button>}
       </div>
       </div>
     </div>
