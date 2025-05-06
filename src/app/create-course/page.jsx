@@ -5,6 +5,9 @@ import { GiDiscussion } from "react-icons/gi";
 import { IoOptions } from "react-icons/io5";
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
+import SelectCategory from './_components/SelectCategory';
+import TopicDescription from './_components/TopicDescription';
+import SelectOption from './_components/SelectOption';
 
 function CreateCourse() {
   const stepperOptions=[{
@@ -42,7 +45,9 @@ const [activeIndex, setActiveIndex]=useState(0)
           ))}
         </div>
       </div>
+
       <div className='px-10 md:px-20 lg:px-44 mt-10'>
+        {activeIndex==0?<SelectCategory/>:activeIndex==1?<TopicDescription/>:<SelectOption/>}
       <div className='flex justify-between mt-10'>
         <Button variant={"outline"} disabled={activeIndex==0} onClick={()=>setActiveIndex(activeIndex-1)}>Prev</Button>
         {activeIndex<2 &&<Button onClick={()=>setActiveIndex(activeIndex+1)}>Next</Button>}
