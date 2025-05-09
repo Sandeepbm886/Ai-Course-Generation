@@ -44,6 +44,12 @@ const checkStaus=()=>{
   }
   return false;
 }
+const hadelGenerateCourse=()=>{
+  const BASIC_PROMPT='Generate A Course Tutorial on Following Detail With field as Course Name, Description, Along with Chapter Name, about, Duration:';
+  const USER_INPUT_PROMPT='Category: '+userCourseInput?.category+', Topic: '+userCourseInput?.topic+', Difficulty Level: '+userCourseInput?.difficulty+', Duration: '+userCourseInput?.duration+', No.of Chapters: '+userCourseInput?.chapters+', in JSON format';
+  const FINAL_PROMPT=BASIC_PROMPT+USER_INPUT_PROMPT;
+  console.log(FINAL_PROMPT);
+}
   return (
     <div>
       <div className='flex flex-col justify-center items-center mt-10'>
@@ -68,7 +74,7 @@ const checkStaus=()=>{
       <div className='flex justify-between mt-10'>
         <Button variant={"outline"} disabled={activeIndex==0} onClick={()=>setActiveIndex(activeIndex-1)}>Prev</Button>
         {activeIndex<2 &&<Button disabled={checkStaus()} onClick={()=>setActiveIndex(activeIndex+1)}>Next</Button>}
-        {activeIndex==2 &&<Button disabled={checkStaus()} onClick={()=>setActiveIndex(activeIndex+1)}>Generate Course Layout</Button>}
+        {activeIndex==2 &&<Button disabled={checkStaus()} onClick={()=> hadelGenerateCourse()}>Generate Course Layout</Button>}
       </div>
       </div>
     </div>
