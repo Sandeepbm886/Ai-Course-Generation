@@ -9,6 +9,8 @@ import SelectCategory from './_components/SelectCategory';
 import TopicDescription from './_components/TopicDescription';
 import SelectOption from './_components/SelectOption';
 import { UserInputContext } from '../_context/UserInputContext';
+import { GenerateCourseLayout } from '../../../configs/AiModel';
+import Loader from './_components/Loader';
 
 function CreateCourse() {
   const stepperOptions=[{
@@ -29,6 +31,7 @@ function CreateCourse() {
 ]
 const {userCourseInput, setUserCourseInput}=useContext(UserInputContext);
 const [activeIndex, setActiveIndex]=useState(0);
+const [loader,setLoader]=useState(false);
 const checkStaus=()=>{
   if(userCourseInput.length==0){
     return true;
@@ -44,12 +47,21 @@ const checkStaus=()=>{
   }
   return false;
 }
-const hadelGenerateCourse=()=>{
-  const BASIC_PROMPT='Generate A Course Tutorial on Following Detail With field as Course Name, Description, Along with Chapter Name, about, Duration:';
-  const USER_INPUT_PROMPT='Category: '+userCourseInput?.category+', Topic: '+userCourseInput?.topic+', Difficulty Level: '+userCourseInput?.difficulty+', Duration: '+userCourseInput?.duration+', No.of Chapters: '+userCourseInput?.chapters+', in JSON format';
-  const FINAL_PROMPT=BASIC_PROMPT+USER_INPUT_PROMPT;
+const hadelGenerateCourse = async () => {
+  const BASIC_PROMPT = 'Generate A Course Tutorial on Following Detail With field as Course Name, Description, Along with Chapter Name, about, Duration:';
+  const USER_INPUT_PROMPT = 'Category: ' + userCourseInput?.category + ', Topic: ' + userCourseInput?.topic + ', Difficulty Level: ' + userCourseInput?.difficulty + ', Duration: ' + userCourseInput?.duration + ', No.of Chapters: ' + userCourseInput?.chapters + ', in JSON format';
+  const FINAL_PROMPT = BASIC_PROMPT + USER_INPUT_PROMPT;
   console.log(FINAL_PROMPT);
-}
+
+  try {
+    setLoader(true);
+    const result = await GenerateCourseLayout(FINAL_PROMPT);
+    console.log(JSON.parse(result));
+    setLoader(false); // or use result directly if already JSON
+  } catch (err) {
+    console.error('Error parsing or fetching:', err);
+  }
+};
   return (
     <div>
       <div className='flex flex-col justify-center items-center mt-10'>
@@ -77,6 +89,7 @@ const hadelGenerateCourse=()=>{
         {activeIndex==2 &&<Button disabled={checkStaus()} onClick={()=> hadelGenerateCourse()}>Generate Course Layout</Button>}
       </div>
       </div>
+      <Loader loading={loader}/>
     </div>
   )
 }
