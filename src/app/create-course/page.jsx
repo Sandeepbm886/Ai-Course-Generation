@@ -11,6 +11,11 @@ import SelectOption from './_components/SelectOption';
 import { UserInputContext } from '../_context/UserInputContext';
 import { GenerateCourseLayout } from '../../../configs/AiModel';
 import Loader from './_components/Loader';
+import { db } from '../../../configs/db';
+import { CourseList } from '../../../configs/schema';
+import uuid4 from 'uuid4';
+import { useUser } from '@clerk/nextjs';
+import { useRouter } from 'next/navigation';
 
 function CreateCourse() {
   const stepperOptions=[{
@@ -32,6 +37,8 @@ function CreateCourse() {
 const {userCourseInput, setUserCourseInput}=useContext(UserInputContext);
 const [activeIndex, setActiveIndex]=useState(0);
 const [loader,setLoader]=useState(false);
+const {user}=useUser();
+const router=useRouter();
 const checkStaus=()=>{
   if(userCourseInput.length==0){
     return true;
@@ -57,11 +64,32 @@ const hadelGenerateCourse = async () => {
     setLoader(true);
     const result = await GenerateCourseLayout(FINAL_PROMPT);
     console.log(JSON.parse(result));
-    setLoader(false); // or use result directly if already JSON
+    setLoader(false); 
+    SaveCourseLayoutToDb(JSON.parse(result));
   } catch (err) {
     console.error('Error parsing or fetching:', err);
   }
 };
+
+const SaveCourseLayoutToDb=async(courseLayout)=>{
+  var id=uuid4();
+  setLoader(true);
+  const result =await db.insert(CourseList).values({
+    courseId:id,
+    courseName:userCourseInput?.topic,
+    level:userCourseInput?.difficulty,
+    category:userCourseInput?.category,
+    courseOutput:courseLayout,
+    createdBy:user?.primaryEmailAddress?.emailAddress,
+    userName:user?.fullName,
+    userProfileImage:user?.imageUrl
+
+
+  })
+  console.log("Finished");
+  setLoader(false);
+  router.replace(`/create-course/${id}`);
+}
   return (
     <div>
       <div className='flex flex-col justify-center items-center mt-10'>
