@@ -5,7 +5,7 @@ const ai = new GoogleGenAI({
   apiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY,
 });
 
-const model = 'gemini-2.5-pro-exp-03-25';
+const model = 'gemini-2.5-pro-preview-03-25';
 const config = {
   responseMimeType: 'application/json',
 };
