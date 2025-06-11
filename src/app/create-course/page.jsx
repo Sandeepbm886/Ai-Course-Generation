@@ -78,6 +78,8 @@ const SaveCourseLayoutToDb=async(courseLayout)=>{
     courseId:id,
     courseName:userCourseInput?.topic,
     level:userCourseInput?.difficulty,
+    includeVideo:userCourseInput?.video,
+    duration:userCourseInput?.duration,
     category:userCourseInput?.category,
     courseOutput:courseLayout,
     createdBy:user?.primaryEmailAddress?.emailAddress,
@@ -86,7 +88,7 @@ const SaveCourseLayoutToDb=async(courseLayout)=>{
 
 
   })
-  console.log("Finished");
+  
   setLoader(false);
   router.replace(`/create-course/${id}`);
 }
