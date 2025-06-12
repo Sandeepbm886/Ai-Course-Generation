@@ -17,7 +17,7 @@ import { Button } from '@/components/ui/button';
 import { CourseList } from '../../../../../configs/schema';
 import { db } from '../../../../../configs/db';
 import { eq } from 'drizzle-orm';
-function EditCourseBasicInfo({course}) {
+function EditCourseBasicInfo({course, refreshData}) {
     const[name,setName]=useState();
     const[description,setDescription]=useState();
     useEffect(() => {
@@ -33,6 +33,7 @@ function EditCourseBasicInfo({course}) {
         const result=await db.update(CourseList).set({
             courseOutput:course?.courseOutput
         }).where(eq(CourseList.id, course.id)).returning({id:CourseList.id});
+        refreshData(true)
     }
     return (
         <Dialog>

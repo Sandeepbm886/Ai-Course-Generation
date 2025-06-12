@@ -32,7 +32,6 @@ function CourseLayout({ params }) {
           )
         );
       setCourse(result[0]);
-      console.log(result);
     } catch (err) {
       console.error("Error fetching course:", err);
     }
@@ -42,11 +41,11 @@ function CourseLayout({ params }) {
   <div className='mt-10 px-7 md:px-20 lg:px-44'>
     <h2 className='font-bold text-center text-2xl'>Course Layout</h2>
     {/* basic info */}
-    <CourseBasicInfo course={course}/>
+    <CourseBasicInfo course={course} refreshData={() => GetCourse()} />
     {/* Course detail */}
     <CourseDetail course={course}/>
     {/* list of lession */}
-    <ChapterList course={course}/>
+    <ChapterList course={course} refreshData={() => GetCourse()} />
   </div>
   );
 }
