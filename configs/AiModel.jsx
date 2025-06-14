@@ -27,3 +27,22 @@ export async function GenerateCourseLayout(userPrompt) {
   return response.candidates?.[0]?.content?.parts?.[0]?.text || 'No response';
 }
 
+export async function GenerateCourseContent(userPrompt) {
+  const response = await ai.models.generateContent({
+    model,
+    config,
+    contents: [
+      {
+        role: 'user',
+        parts: [
+          {
+            text: userPrompt,
+          },
+        ],
+      },
+    ],
+  });
+
+
+    return response.candidates?.[0]?.content?.parts?.[0]?.text || 'No response';
+  }

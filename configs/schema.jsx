@@ -1,3 +1,4 @@
+import { integer } from "drizzle-orm/gel-core";
 import { json, pgTable, serial, varchar } from "drizzle-orm/pg-core";
 
 export const CourseList=pgTable('courseList',{
@@ -11,5 +12,14 @@ export const CourseList=pgTable('courseList',{
     courseOutput:json('courseOutput').notNull(),
     createdBy:varchar('createdBy').notNull(),
     userName:varchar('userName'),
-    userProfileImage:varchar('userProfileImage')
+    userProfileImage:varchar('userProfileImage'),
+    publish:varchar('publish').notNull().default('No'),
+})
+
+export const Chapters=pgTable('Chapters',{
+    id:serial('id').primaryKey(),
+    courseId:varchar('courseId').notNull(),
+    chapterId:integer('chapterId').notNull(),
+    content:json('content').notNull(),
+    videoId:varchar('videoId').notNull(),
 })
