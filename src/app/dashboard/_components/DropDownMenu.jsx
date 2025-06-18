@@ -20,10 +20,12 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { IoMdOpen } from "react-icons/io";
+import Link from 'next/link';
 
-
-function DropDownMenu({ children, handelOnDelete }) {
+function DropDownMenu({ children, handelOnDelete, course }) {
   const [openAlert,setOpenAlert] = React.useState(false);
+  
 
 
   return (
@@ -31,6 +33,13 @@ function DropDownMenu({ children, handelOnDelete }) {
       <DropdownMenu>
         <DropdownMenuTrigger>{children}</DropdownMenuTrigger>
         <DropdownMenuContent>
+          <Link href={`/course/${course.courseId}`} className='no-underline text-black'>
+          <DropdownMenuItem >
+            <div className='flex items-center gap-1'>
+              <IoMdOpen />Open
+            </div>
+          </DropdownMenuItem>
+          </Link>
           <DropdownMenuItem onClick={()=> setOpenAlert(true)}>
             <div className='flex items-center gap-1'>
               <MdDelete />Delete
@@ -51,7 +60,7 @@ function DropDownMenu({ children, handelOnDelete }) {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel onClick={()=>setOpenAlert(false)}>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={()=>handelOnDelete()}>Continue</AlertDialogAction>
+            <AlertDialogAction onClick={()=>{handelOnDelete(); setOpenAlert(false);}}>Continue</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

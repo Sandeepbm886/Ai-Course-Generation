@@ -58,36 +58,34 @@ function CourseLayout({ params }) {
                       Only return valid JSON.
                       `;
 
-
-      if (index == 0) {
-        try {
-          // Generate video url
-          let videoId = '';
-          getVideos(course?.courseOutput?.["Topic"] + ':' + chapter?.["Chapter Name"]).then(resp => {
-            console.log(resp);
-            videoId = resp[0]?.id?.videoId;
-          })
-          const result = await GenerateCourseContent(PROMPT);
-          console.log(JSON.parse(result));
-
-          //Save Chapter content + videoId to database
-          await db.insert(Chapters).values({
-            courseId: course?.courseId,
-            chapterId: index,
-            content: JSON.parse(result),
-            videoId: videoId
-          });
-          setLoading(false);
-        } catch (e) {
-          setLoading(false);
-          console.error("Error generating content:", e);
-        }
-        await db.update(CourseList).set({
-          publish: 'Yes',
+      try {
+        // Generate video url
+        let videoId = '';
+        getVideos(course?.courseOutput?.["Topic"] + ':' + chapter?.["Chapter Name"]).then(resp => {
+          console.log(resp);
+          videoId = resp[0]?.id?.videoId;
         })
-        router.replace(`/create-course/${course?.courseId}/finish`);
+        const result = await GenerateCourseContent(PROMPT);
+        console.log(JSON.parse(result));
+
+        //Save Chapter content + videoId to database
+        await db.insert(Chapters).values({
+          courseId: course?.courseId,
+          chapterId: index,
+          content: JSON.parse(result),
+          videoId: videoId
+        });
+        setLoading(false);
+      } catch (e) {
+        setLoading(false);
+        console.error("Error generating content:", e);
       }
-    })
+      await db.update(CourseList).set({
+        publish: 'Yes',
+      })
+      router.replace(`/create-course/${course?.courseId}/finish`);
+    }
+    );
   }
 
   return (

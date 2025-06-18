@@ -43,12 +43,12 @@ function CourseCard({ course ,refreshData}) {
   }
 
   return (
-    <Link href={`/create-course/${course.courseId}/finish`} className='no-underline text-black'>
-    <div className='shadow-sm rounded-lg border p-2 hover:scale-105 transition-all cursor-pointer mt-4'>
+    
+    <div className='shadow-sm rounded-lg border p-2 hover:scale-105 transition-all  mt-4'>
       <Image src={imgUrl} alt={course?.courseOutput?.["Course Name"]} width={300} height={200} className='w-full h-[200px] object-cover rounded-lg' />
       <div className='p-2'>
-        <h2 className='font-medium text-lg'>{course?.courseOutput?.["Course Name"]}
-          <DropDownMenu handelOnDelete={()=>handelOnDelete()}><BsThreeDotsVertical /></DropDownMenu>
+        <h2 className='font-medium text-lg flex justify-between'>{course?.courseOutput?.["Course Name"]}
+          <DropDownMenu handelOnDelete={()=>handelOnDelete()} course={course}><BsThreeDotsVertical className='cursor-pointer' /></DropDownMenu>
         </h2>
         <p className='text-sm text-gray-400 my-1'>{course?.category}</p>
         <div className='flex items-center justify-between'>
@@ -61,7 +61,7 @@ function CourseCard({ course ,refreshData}) {
         </div>
       </div>
     </div>
-    </Link>
+    
   )
   
 }
