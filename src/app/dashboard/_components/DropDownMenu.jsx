@@ -35,13 +35,13 @@ function DropDownMenu({ children, handelOnDelete, course }) {
         <DropdownMenuContent>
           <Link href={`/course/${course.courseId}`} className='no-underline text-black'>
           <DropdownMenuItem >
-            <div className='flex items-center gap-1'>
+            <div className='flex items-center gap-1 cursor-pointer'>
               <IoMdOpen />Open
             </div>
           </DropdownMenuItem>
           </Link>
           <DropdownMenuItem onClick={()=> setOpenAlert(true)}>
-            <div className='flex items-center gap-1'>
+            <div className='flex items-center gap-1 cursor-pointer'>
               <MdDelete />Delete
             </div>
           </DropdownMenuItem>
