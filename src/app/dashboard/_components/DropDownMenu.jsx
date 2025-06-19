@@ -23,7 +23,7 @@ import {
 import { IoMdOpen } from "react-icons/io";
 import Link from 'next/link';
 
-function DropDownMenu({ children, handelOnDelete, course }) {
+function DropDownMenu({ children, handelOnDelete, course,explorePage = false }) {
   const [openAlert,setOpenAlert] = React.useState(false);
   
 
@@ -40,22 +40,22 @@ function DropDownMenu({ children, handelOnDelete, course }) {
             </div>
           </DropdownMenuItem>
           </Link>
-          <DropdownMenuItem onClick={()=> setOpenAlert(true)}>
+          {!explorePage && <DropdownMenuItem onClick={()=> setOpenAlert(true)}>
             <div className='flex items-center gap-1 cursor-pointer'>
               <MdDelete />Delete
             </div>
-          </DropdownMenuItem>
+          </DropdownMenuItem>}
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <AlertDialog open={openAlert}>
+      <AlertDialog open={openAlert} onOpenChange={setOpenAlert}>
         
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete your account
-              and remove your data from our servers.
+              This action cannot be undone. This will permanently delete your course
+              and remove it from our servers.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

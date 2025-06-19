@@ -7,6 +7,7 @@ import CourseBasicInfo from '../_components/CourseBasicInfo';
 import { useRouter } from 'next/navigation';
 import { CourseList } from '../../../../../configs/schema';
 import { TbCopy } from "react-icons/tb";
+import Link from 'next/link';
 
 function FinishScreen({ params }) {
   const unwrappedParams = use(params);
@@ -43,10 +44,11 @@ function FinishScreen({ params }) {
       <h2 className='text-center font-bold text-2xl my-3 text-primary'>Congrats Yours Course Is Ready</h2>
       
       <CourseBasicInfo course={course} refreshData={() => console.log()} />
-      <h2>Course URL:</h2>
-      <h2 className='text-center text-gray-400 border p-2 rounded flex gap-5'>{process.env.NEXT_PUBLIC_DOMAIN_NAME}/course/view/{course?.courseId}
-        <TbCopy className='h-5 w-5 cursor-pointer' onClick={async ()=>await navigator.clipboard.writeText(process.env.NEXT_PUBLIC_DOMAIN_NAME+"/course/view/"+course?.courseId)} />
+      <h2>Start Learning:</h2>
+      <Link href={`/course/${course?.courseId}`} className='flex items-center gap-2 text-primary font-medium'>
+      <h2 className='text-center text-gray-400 border p-2 rounded flex gap-5'>Click Here
       </h2>
+      </Link>
     </div>
   )
 }

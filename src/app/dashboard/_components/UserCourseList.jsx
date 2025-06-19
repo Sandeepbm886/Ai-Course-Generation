@@ -32,20 +32,16 @@ function UserCourseList() {
 
   return (
     <div className='mt-10'>
-      <h2 className='font-medium text-xl'>My AI Courses</h2>
-      <div className='grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-5 '>
-        {courseList?.length > 0
-          ?
-          courseList.map((course, index) => (
-            <CourseCard course={course} key={index} refreshData={() => getUserCourses()} />
-          ))
-          :
-          [courseList].map((_, index) => (
-            <div key={index} className='w-full mt-5 bg-slate-200 rounded-lg h-[270px] animate-pulse'>
-            </div>
-          ))
-        }
-      </div>
+      {courseList.length > 0 && (
+        <>
+          <h2 className='font-medium text-xl'>My AI Courses</h2>
+          <div className='grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-5 '>
+            {courseList.map((course, index) => (
+              <CourseCard course={course} key={index} refreshData={() => getUserCourses()} explorePage={false} />
+            ))}
+          </div>
+        </>
+      )}
     </div>
   )
 }
