@@ -8,7 +8,8 @@ import ChapterContent from './_components/ChapterContent';
 
 function CourseStart({ params }) {
     const unwrappedParams = use(params);
-    const [course, setCourse] = useState([]);
+    
+    const [course, setCourse] = useState(null); 
     const [selectedChapter, setSelectedChapter] = useState();
     const [chapterContent, setChapterContent] = useState();
     useEffect(() => {
@@ -22,9 +23,9 @@ function CourseStart({ params }) {
         setCourse(result[0]);
     }
 
-    const GetContent = async(chapterId) => {
-        const result= await db.select().from(Chapters)
-        .where(and(eq(Chapters.chapterId, chapterId), eq(Chapters.courseId, course?.courseId)));
+    const GetContent = async (chapterId) => {
+        const result = await db.select().from(Chapters)
+            .where(and(eq(Chapters.chapterId, chapterId), eq(Chapters.courseId, course?.courseId)));
         console.log("Chapter Content:", result);
         setChapterContent(result[0]);
     }

@@ -4,7 +4,7 @@ import { db } from '../../../../configs/db'
 import { CourseList } from '../../../../configs/schema'
 import { eq } from 'drizzle-orm'
 import { useUser } from '@clerk/nextjs'
-import CourseCard from './coursecard'
+import CourseCard from './Coursecard'
 import { UserCourseListContext } from '@/app/_context/UserCourseListContext'
 
 function UserCourseList() {
